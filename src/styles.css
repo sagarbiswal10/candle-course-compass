@@ -159,3 +159,75 @@
     color: var(--color-foreground);
   }
 }
+
+@keyframes academy-enter {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes chart-drift {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.hero-copy {
+  animation: academy-enter 650ms ease-out both;
+}
+
+.hero-art {
+  animation: academy-enter 800ms 120ms ease-out both;
+}
+
+.hero-callout {
+  animation: chart-drift 4s 1s ease-in-out infinite;
+}
+
+.course-card {
+  animation: academy-enter 560ms both;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.course-card:nth-child(2) {
+  animation-delay: 70ms;
+}
+
+.course-card:nth-child(3) {
+  animation-delay: 140ms;
+}
+
+.course-card:nth-child(4) {
+  animation-delay: 210ms;
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .course-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--market-down);
+    box-shadow: 0 8px 22px -16px var(--foreground);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

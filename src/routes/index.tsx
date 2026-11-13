@@ -7,6 +7,7 @@ import {
   ChartNoAxesCombined,
   Clock3,
   GraduationCap,
+  PhoneCall,
   ShieldCheck,
 } from "lucide-react";
 
@@ -74,6 +75,7 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const [filter, setFilter] = useState<CourseFilter>("All courses");
+  const [callbackPreviewShown, setCallbackPreviewShown] = useState(false);
   const visibleCourses = courses.filter(
     (course) => filter === "All courses" || course.category === filter,
   );
@@ -96,6 +98,9 @@ function Index() {
             <a href="#courses" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
               Courses
             </a>
+            <a href="#about-academy" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
+              About
+            </a>
             <a href="#approach" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
               Our approach
             </a>
@@ -114,14 +119,14 @@ function Index() {
 
       <section id="home" className="relative border-b border-border/70 bg-secondary/55">
         <div className="mx-auto grid max-w-7xl items-center gap-6 px-5 pb-12 pt-12 sm:px-8 sm:pb-16 sm:pt-16 lg:min-h-[570px] lg:grid-cols-[0.92fr_1.08fr] lg:gap-10 lg:px-12 lg:py-16">
-          <div className="relative z-[1] max-w-xl">
+          <div className="hero-copy relative z-[1] max-w-xl">
             <p className="mb-6 inline-flex items-center gap-2 text-xs font-semibold uppercase text-primary">
               <span className="size-2 rounded-full bg-primary" />
               A clearer way to learn the markets
             </p>
             <h1 className="max-w-xl font-display text-5xl font-semibold leading-[1.06] text-foreground sm:text-6xl lg:text-[4.35rem]">
               Learn the market.
-              <span className="mt-1 block text-primary">Trade with clarity.</span>
+              <span className="mt-1 block text-market-down">Trade with clarity.</span>
             </h1>
             <p className="mt-6 max-w-lg text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">
               Build your understanding one lesson at a time—from your first candlestick to a more considered trading plan.
@@ -145,7 +150,7 @@ function Index() {
             </div>
           </div>
 
-          <div className="relative min-w-0 lg:-mr-8">
+          <div className="hero-art relative min-w-0 lg:-mr-8">
             <img
               src={chartArtwork}
               alt="Green and red candlesticks tracing price movement across a pale blue chart"
@@ -154,8 +159,8 @@ function Index() {
               fetchPriority="high"
               className="aspect-[1.25] w-full object-cover object-center sm:aspect-[1.4] lg:aspect-[1.3]"
             />
-            <div className="absolute bottom-4 left-3 flex items-center gap-3 border border-border/70 bg-background/95 px-4 py-3 shadow-sm sm:bottom-7 sm:left-5">
-              <span className="flex size-10 items-center justify-center rounded-sm bg-market-up/10 text-market-up">
+            <div className="hero-callout absolute bottom-4 left-3 flex items-center gap-3 border border-border/70 border-l-2 border-l-market-down bg-background/95 px-4 py-3 shadow-sm sm:bottom-7 sm:left-5">
+              <span className="flex size-10 items-center justify-center rounded-sm bg-market-down/10 text-market-down">
                 <GraduationCap aria-hidden="true" className="size-5" />
               </span>
               <span>
@@ -207,7 +212,7 @@ function Index() {
 
           <div id="start-free" className="scroll-mt-8 mt-9 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
             {visibleCourses.map((course, index) => (
-              <article key={course.title} className="flex flex-col border border-border bg-card p-5 sm:p-6">
+                <article key={course.title} className="course-card flex flex-col border border-border bg-card p-5 sm:p-6">
                 <div className="flex items-start justify-between gap-3">
                   <span className="flex size-10 items-center justify-center rounded-sm bg-secondary text-primary">
                     {course.category === "Free" ? (
@@ -248,6 +253,23 @@ function Index() {
         </div>
       </section>
 
+      <section id="about-academy" className="scroll-mt-6 border-y border-border/70 bg-background py-16 sm:py-20">
+        <div className="mx-auto grid max-w-7xl gap-8 px-5 sm:px-8 lg:grid-cols-[0.88fr_1.12fr] lg:items-center lg:gap-16 lg:px-12">
+          <div>
+            <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase text-market-down">
+              <span className="size-2 rounded-full bg-market-down" />
+              About the academy
+            </p>
+            <h2 className="mt-3 max-w-lg font-display text-3xl font-semibold leading-tight sm:text-4xl">
+              Better questions lead to better learning.
+            </h2>
+          </div>
+          <p className="max-w-2xl border-l-2 border-market-down pl-5 text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">
+            Trading Point Academy makes market education easier to approach. Start with the basics, explore chart-reading skills, and learn to think carefully about risk—at a pace that works for you.
+          </p>
+        </div>
+      </section>
+
       <section id="approach" className="scroll-mt-6 border-y border-border/70 bg-secondary/55 py-16 sm:py-20">
         <div className="mx-auto grid max-w-7xl gap-10 px-5 sm:px-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16 lg:px-12">
           <div>
@@ -272,6 +294,64 @@ function Index() {
               </li>
             ))}
           </ol>
+        </div>
+      </section>
+
+      <section id="callback" className="scroll-mt-6 border-t border-border bg-secondary/55 py-16 sm:py-20">
+        <div className="mx-auto grid max-w-7xl gap-10 px-5 sm:px-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-16 lg:px-12">
+          <div>
+            <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase text-market-down">
+              <PhoneCall aria-hidden="true" className="size-4" />
+              Get learning guidance
+            </p>
+            <h2 className="mt-3 max-w-lg font-display text-3xl font-semibold leading-tight sm:text-4xl">
+              Not sure where to start?
+            </h2>
+            <p className="mt-4 max-w-lg leading-7 text-muted-foreground">
+              Share your number to preview the callback request. A future academy assistant could ask what you’d like to learn and help point you toward a course.
+            </p>
+          </div>
+
+          <form
+            className="border border-border border-t-2 border-t-market-down bg-card p-5 sm:p-7"
+            onSubmit={(event) => {
+              event.preventDefault();
+              setCallbackPreviewShown(true);
+              event.currentTarget.reset();
+            }}
+          >
+            <label htmlFor="callback-phone" className="block text-sm font-semibold">
+              Phone number
+            </label>
+            <div className="mt-2 flex flex-col gap-3 sm:flex-row">
+              <input
+                id="callback-phone"
+                name="phone"
+                type="tel"
+                autoComplete="tel"
+                inputMode="tel"
+                minLength={7}
+                maxLength={20}
+                pattern="[+0-9() .-]{7,20}"
+                title="Enter a phone number using digits and common phone symbols."
+                placeholder="Add your phone number"
+                required
+                aria-describedby="callback-note"
+                className="h-12 min-w-0 flex-1 border border-input bg-background px-4 text-base outline-none transition-shadow placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring"
+              />
+              <Button type="submit" size="lg" className="h-12 shrink-0 rounded-sm px-5">
+                Preview callback <ArrowRight aria-hidden="true" />
+              </Button>
+            </div>
+            <p id="callback-note" className="mt-4 text-xs leading-5 text-muted-foreground">
+              Callback preview only. Phone calls are not connected, and this form doesn’t send or save your number.
+            </p>
+            {callbackPreviewShown ? (
+              <p role="status" className="mt-4 border-l-2 border-l-market-down bg-market-down/10 px-4 py-3 text-sm leading-6 text-foreground">
+                Thanks for trying the preview. Callback calls aren’t active yet, and your number wasn’t sent or saved.
+              </p>
+            ) : null}
+          </form>
         </div>
       </section>
 
