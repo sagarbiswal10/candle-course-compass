@@ -28,3 +28,6 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project architecture
+- Keep the Trading Point Academy experience as a static single-page site at `/`; add persistence or server features only when requested, since the landing page does not collect or retain learner data.
